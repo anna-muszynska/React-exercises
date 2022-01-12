@@ -1,6 +1,5 @@
 import styles from "./HeaderCartButton.module.css";
 import CartIcon from "../Cart/CartIncon";
-import { classes } from "istanbul-lib-coverage";
 
 const HeaderCartButton = (props) => {
   return (

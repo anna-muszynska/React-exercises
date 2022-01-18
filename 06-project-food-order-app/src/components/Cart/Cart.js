@@ -8,7 +8,7 @@ import styles from "./Cart.module.css";
 const Cart = (props) => {
   const ctx = useContext(CartContext);
 
-  const totalAmount = `$${ctx.totalAmount.toFixed(2)}`;
+  const totalAmount = `$${Math.round(ctx.totalAmount * 100) / 100}`;
   const hasItems = ctx.items.length > 0;
 
   const cartItemRemoveHandler = (id) => {

@@ -1,44 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import Tasks from './components/Tasks/Tasks';
 import NewTask from './components/NewTask/NewTask';
 import useHttp from "./hooks/use-http";
 
 function App() {
-  const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
-  const transformTasks = tasksObj => {
-    const loadedTasks = [];
+    const {isLoading, sendRequest: fetchTasks, error} = useHttp();
 
-    for (const taskKey in tasksObj) {
-      loadedTasks.push({ id: taskKey, text: tasksObj[taskKey].text });
-    }
+    useEffect(() => {
+        const transformTasks = (tasksObj) => {
+            const loadedTasks = [];
 
-    setTasks(loadedTasks);
-  }
+            for (const taskKey in tasksObj) {
+                loadedTasks.push({id: taskKey, text: tasksObj[taskKey].text});
+            }
 
-  const {isLoading, sendRequest: fetchTasks, error}= useHttp({url:'https://react-http-e6d4c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'}, transformTasks
-  );
+            setTasks(loadedTasks);
+        };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
+        fetchTasks(
+            {url: 'https://react-http-e6d4c-default-rtdb.europe-west1.firebasedatabase.app/tasks.json'}, transformTasks
+        );
+    }, [fetchTasks]);
 
-  const taskAddHandler = (task) => {
-    setTasks((prevTasks) => prevTasks.concat(task));
-  };
+    const taskAddHandler = (task) => {
+        setTasks((prevTasks) => prevTasks.concat(task));
+    };
 
-  return (
-    <React.Fragment>
-      <NewTask onAddTask={taskAddHandler} />
-      <Tasks
-        items={tasks}
-        loading={isLoading}
-        error={error}
-        onFetch={fetchTasks}
-      />
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <NewTask onAddTask={taskAddHandler}/>
+            <Tasks
+                items={tasks}
+                loading={isLoading}
+                error={error}
+                onFetch={fetchTasks}
+            />
+        </React.Fragment>
+    );
 }
 
 export default App;

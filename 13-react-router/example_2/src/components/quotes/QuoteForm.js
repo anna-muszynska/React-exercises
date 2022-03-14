@@ -16,7 +16,7 @@ const QuoteForm = (props) => {
 
     // optional: Could validate here
 
-    props.onAddQuote({ author: enteredAuthor, text: enteredText });
+    props.onAdd({ author: enteredAuthor, text: enteredText });
   }
 
   return (
@@ -34,7 +34,7 @@ const QuoteForm = (props) => {
         </div>
         <div className={classes.control}>
           <label htmlFor='text'>Text</label>
-          <textarea id='text' rows='5' ref={textInputRef}></textarea>
+          <textarea id='text' rows='5' ref={textInputRef}/>
         </div>
         <div className={classes.actions}>
           <button className='btn'>Add Quote</button>
